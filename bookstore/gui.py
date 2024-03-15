@@ -37,6 +37,16 @@ class AddBookDialog(tk.Toplevel):
         self.style = ttk.Style()
         self.style.configure("Accent.TButton", foreground="black", background="#008080", font=("Arial", 12))
 
+    '''def add_book(self):
+        title = self.title_entry.get()
+        author = self.author_entry.get()
+        price = float(self.price_entry.get()) if self.price_entry.get() else 0.0
+
+        if title and author:
+            new_book = Book(title, author, price)
+            self.bookstore.add_book(new_book)
+            messagebox.showinfo("Success", "Book added successfully!")
+            self.destroy()'''
     def add_book(self):
         title = self.title_entry.get()
         author = self.author_entry.get()
@@ -47,8 +57,7 @@ class AddBookDialog(tk.Toplevel):
             self.bookstore.add_book(new_book)
             messagebox.showinfo("Success", "Book added successfully!")
             self.destroy()
-
-class DisplayBooksDialog(tk.Toplevel):
+'''class DisplayBooksDialog(tk.Toplevel):
     def __init__(self, master, bookstore):
         super().__init__(master)
         self.title("Book List")
@@ -62,7 +71,25 @@ class DisplayBooksDialog(tk.Toplevel):
 
         for i, book in enumerate(self.bookstore.books):
             book_label = ttk.Label(self, text=str(book), font=("Arial", 12), background="#FFD700", foreground="#333")
+            book_label.grid(row=i, column=0, pady=5) '''
+class DisplayBooksDialog(tk.Toplevel):
+    def __init__(self, master, bookstore):
+        super().__init__(master)
+        self.title("Book List")
+        self.configure(bg="#FFD700")  # Gold background
+
+        self.bookstore = bookstore
+
+        books = self.bookstore.get_books()  # Retrieve books from the bookstore
+        if not books:
+            messagebox.showinfo("Info", "No books in the bookstore.")
+            return
+
+        for i, book in enumerate(books):
+            book_label = ttk.Label(self, text=str(book), font=("Arial", 12), background="#FFD700", foreground="#333")
             book_label.grid(row=i, column=0, pady=5)
+
+
 
 class BookstoreGUI:
     def __init__(self, master):
